@@ -6,8 +6,6 @@ import { Redirect } from "react-router-dom";
 class EditCatForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
-    console.log(props.cats.find(cat => cat.id === props.id));
     const { name, image, description, id } = props.cats.find(cat => cat.id === props.match.params.id);
     this.state = {
       name,

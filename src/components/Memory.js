@@ -1,27 +1,27 @@
 import React from 'react';
-import Cat from "./Cat";
 import { connect } from "react-redux";
 import { shuffle } from 'lodash';
-import { setGame } from "../actions/game";
-import EmptyTile from "./EmptyTile";
+import { resetProgress, setGame } from "../actions/game";
+import HiddenTile from "./HiddenTile";
+import { FoundTile } from "./FoundTile";
+import Tile from "./Tile";
 
 class Memory extends React.Component {
 
   constructor(props) {
     super(props);
 
-    const gameElements = shuffle(props.cat.cats.concat(props.cat.cats));
+    const gameElements = shuffle(props.cats.concat(props.cats));
+    props.dispatch(resetProgress());
     props.dispatch(setGame(gameElements));
   }
 
   render() {
-    const Elements = this.props.game.elements.map((element, index) => {
-      return  element.exposed ?
-        (<Cat name={element.name}
-              description={element.description}
-              id={element.id}
-              img={element.image}
-              key={`${element.id}.${index}`}/>) : <EmptyTile key={`${element.id}.${index}`} id={index} />
+    const { elements, exposed, found } = this.props;
+    const Elements = elements.map((element, index) => {
+      return exposed.find(ex => ex === `${element.id}.${index}`) ?
+        <Tile img={element.image} key={`${element.id}.${index}`}/> : found.find(ex => ex === element.id) ?
+          <FoundTile/> : <HiddenTile key={`${element.id}.${index}`} id={`${element.id}.${index}`}/>
 
     });
     return (
@@ -35,4 +35,16 @@ class Memory extends React.Component {
   };
 }
 
-export default connect(state => state)(Memory);
+Memory.defaultProps = {
+  exposed: [],
+  found: []
+
+};
+export default connect(state => {
+  return {
+    elements: state.game.elements,
+    exposed: state.game.exposed,
+    found: state.game.found,
+    cats: state.cat.cats
+  }
+})(Memory);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
 
 const Tile = (props) => (
   <div className="col-lg-3 col-md-4 col-sm-6 mt-3">

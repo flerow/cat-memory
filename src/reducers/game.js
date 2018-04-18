@@ -1,8 +1,10 @@
 import { cloneDeep } from 'lodash';
-import { EXPOSE_TILE, SET_GAME } from "../actions/game";
+import { EXPOSE_TILE, HIDE_TILES, RESET_PROGRESS, SET_FOUND, SET_GAME } from "../actions/game";
 
 const initialState = {
-  elements: []
+  elements: [],
+  exposed: [],
+  found: []
 };
 
 export default (state = initialState, action) => {
@@ -12,10 +14,13 @@ export default (state = initialState, action) => {
     case SET_GAME:
       return { ...stateClone, elements: action.payload.game };
     case EXPOSE_TILE:
-      const exposedElement = cloneDeep(stateClone.elements.find((element, index) => index === action.payload.index));
-      exposedElement.exposed = true;
-      const elements = stateClone.elements.map((element, index) => index === action.payload.index ? exposedElement :  element);
-      return { elements };
+      return { ...stateClone, exposed: [...stateClone.exposed ? stateClone.exposed : [], action.payload.id] };
+    case HIDE_TILES:
+      return { ...stateClone, exposed: []};
+    case SET_FOUND:
+      return { ...stateClone, found: [...stateClone.found ? stateClone.found : [], action.payload.id]};
+    case RESET_PROGRESS:
+      return { ...stateClone, found: [], exposed: []};
     default:
       return state;
   }

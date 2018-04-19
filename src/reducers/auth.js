@@ -1,10 +1,10 @@
 import { cloneDeep } from 'lodash';
-import { SET_GROUP, SET_LOGGED_IN, SET_LOGGED_OUT, SET_USERNAME } from "../actions/auth";
+import { SET_GROUP, SET_LOGGED_IN, SET_LOGGED_OUT, SET_USERNAME } from '../actions/auth';
 
 const initialState = {
   username: null,
   logged_in: false,
-  group: 'ANON'
+  group: 'ANON',
 };
 
 export default (state = initialState, action) => {
@@ -20,6 +20,6 @@ export default (state = initialState, action) => {
     case SET_GROUP:
       return { ...stateClone, group: action.payload.group };
     default:
-      return state
+      return state;
   }
-}
+};

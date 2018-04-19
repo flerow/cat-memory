@@ -1,17 +1,20 @@
 import React from 'react';
-import { connect } from "react-redux";
-import { editCat } from "../actions/cat";
-import { Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { editCat } from '../actions/cat';
 
 class EditCatForm extends React.Component {
   constructor(props) {
     super(props);
-    const { name, image, description, id } = props.cats.find(cat => cat.id === props.match.params.id);
+    const {
+      name, image, description, id,
+    } = props.cats.find(cat => cat.id === props.match.params.id);
     this.state = {
       name,
       description,
       image,
-      id
+      id,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,19 +25,19 @@ class EditCatForm extends React.Component {
 
   handleNameChange(e) {
     this.setState({
-      name: e.target.value
+      name: e.target.value,
     });
   }
 
   handleDescriptionChange(e) {
     this.setState({
-      description: e.target.value
+      description: e.target.value,
     });
   }
 
   handleImageChange(e) {
     this.setState({
-      image: e.target.value
+      image: e.target.value,
     });
   }
 
@@ -47,7 +50,7 @@ class EditCatForm extends React.Component {
   render() {
     return (
       <div>
-        {this.state.redirect && <Redirect to="/koty"/>}
+        {this.state.redirect && <Redirect to="/koty" />}
         <div className="row">
           <div className="col-6 offset-3">
             <form className="form-horizontal" onSubmit={this.handleSubmit}>
@@ -56,22 +59,40 @@ class EditCatForm extends React.Component {
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="name">Imię</label>
                   <div className="col-md-9">
-                    <input id="name" name="name" type="text" className="form-control" value={this.state.name}
-                           onChange={this.handleNameChange}/>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      className="form-control"
+                      value={this.state.name}
+                      onChange={this.handleNameChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="image">Url zdjęcia</label>
                   <div className="col-md-9">
-                    <input id="image" name="image" type="text" className="form-control" value={this.state.image}
-                           onChange={this.handleImageChange}/>
+                    <input
+                      id="image"
+                      name="image"
+                      type="text"
+                      className="form-control"
+                      value={this.state.image}
+                      onChange={this.handleImageChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="description">Opis</label>
                   <div className="col-md-9">
-                  <textarea className="form-control" id="description" name="description" rows="5"
-                            value={this.state.description} onChange={this.handleDescriptionChange}/>
+                    <textarea
+                      className="form-control"
+                      id="description"
+                      name="description"
+                      rows="5"
+                      value={this.state.description}
+                      onChange={this.handleDescriptionChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
@@ -85,8 +106,15 @@ class EditCatForm extends React.Component {
         </div>
       </div>
     );
-
   }
 }
+
+EditCatForm.propTypes = {
+  cats: PropTypes.arrayOf(PropTypes.object).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.object,
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect(state => state.cat)(EditCatForm);

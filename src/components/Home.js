@@ -1,9 +1,9 @@
 import React from 'react';
-import loggedIn from "../hoc/loggedIn";
-import {connect} from 'react-redux';
-import {compose} from 'redux';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import loggedIn from '../hoc/loggedIn';
 
-const Home = (props) => (
+const Home = () => (
   <div>
     Mały koci CRM.
   </div>
@@ -12,5 +12,5 @@ const Home = (props) => (
 
 export default compose(
   connect(state => state.auth),
-  loggedIn
+  loggedIn,
 )(Home);

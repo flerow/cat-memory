@@ -1,7 +1,8 @@
 import React from 'react';
-import { connect } from "react-redux";
-import { addCat } from "../actions/cat";
-import { Redirect } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addCat } from '../actions/cat';
 
 class AddCatForm extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class AddCatForm extends React.Component {
     this.state = {
       name: '',
       description: '',
-      image: ''
+      image: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,19 +22,19 @@ class AddCatForm extends React.Component {
 
   handleNameChange(e) {
     this.setState({
-      name: e.target.value
+      name: e.target.value,
     });
   }
 
   handleDescriptionChange(e) {
     this.setState({
-      description: e.target.value
+      description: e.target.value,
     });
   }
 
   handleImageChange(e) {
     this.setState({
-      image: e.target.value
+      image: e.target.value,
     });
   }
 
@@ -46,7 +47,7 @@ class AddCatForm extends React.Component {
   render() {
     return (
       <div>
-        {this.state.redirect && <Redirect to="/koty"/>}
+        {this.state.redirect && <Redirect to="/koty" />}
         <div className="row">
           <div className="col-6 offset-3">
             <form className="form-horizontal" onSubmit={this.handleSubmit}>
@@ -55,22 +56,40 @@ class AddCatForm extends React.Component {
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="name">Imię</label>
                   <div className="col-md-9">
-                    <input id="name" name="name" type="text" className="form-control" value={this.state.name}
-                           onChange={this.handleNameChange}/>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      className="form-control"
+                      value={this.state.name}
+                      onChange={this.handleNameChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="image">Url zdjęcia</label>
                   <div className="col-md-9">
-                    <input id="image" name="image" type="text" className="form-control" value={this.state.image}
-                           onChange={this.handleImageChange}/>
+                    <input
+                      id="image"
+                      name="image"
+                      type="text"
+                      className="form-control"
+                      value={this.state.image}
+                      onChange={this.handleImageChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="description">Opis</label>
                   <div className="col-md-9">
-                    <textarea className="form-control" id="description" name="description" rows="5"
-                              value={this.state.description} onChange={this.handleDescriptionChange}/>
+                    <textarea
+                      className="form-control"
+                      id="description"
+                      name="description"
+                      rows="5"
+                      value={this.state.description}
+                      onChange={this.handleDescriptionChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
@@ -84,8 +103,11 @@ class AddCatForm extends React.Component {
         </div>
       </div>
     );
-
   }
 }
+
+AddCatForm.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect()(AddCatForm);

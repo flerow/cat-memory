@@ -1,8 +1,8 @@
 import { cloneDeep } from 'lodash';
-import { ADD_CAT, EDIT_CAT } from "../actions/cat";
+import { ADD_CAT, EDIT_CAT } from '../actions/cat';
 
 const initialState = {
-  cats: []
+  cats: [],
 };
 
 export default (state = initialState, action) => {
@@ -12,8 +12,11 @@ export default (state = initialState, action) => {
     case ADD_CAT:
       return { ...state, cats: [...stateClone.cats, action.payload] };
     case EDIT_CAT:
-      return { ...state, cats: stateClone.cats.map(cat => (cat.id === action.payload.id ? action.payload : cat)) };
+      return {
+        ...state,
+        cats: stateClone.cats.map(cat => (cat.id === action.payload.id ? action.payload : cat)),
+      };
     default:
       return state;
   }
-}
+};

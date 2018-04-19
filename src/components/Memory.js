@@ -1,13 +1,13 @@
 import React from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { shuffle } from 'lodash';
-import { resetProgress, setGame } from "../actions/game";
-import HiddenTile from "./HiddenTile";
-import { FoundTile } from "./FoundTile";
-import Tile from "./Tile";
+import { resetProgress, setGame } from '../actions/game';
+import HiddenTile from './HiddenTile';
+import FoundTile from './FoundTile';
+import Tile from './Tile';
 
 class Memory extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -18,12 +18,10 @@ class Memory extends React.Component {
 
   render() {
     const { elements, exposed, found } = this.props;
-    const Elements = elements.map((element, index) => {
-      return exposed.find(ex => ex === `${element.id}.${index}`) ?
-        <Tile img={element.image} key={`${element.id}.${index}`}/> : found.find(ex => ex === element.id) ?
-          <FoundTile/> : <HiddenTile key={`${element.id}.${index}`} id={`${element.id}.${index}`}/>
+    const Elements = elements.map((element, index) => (exposed.find(ex => ex === `${element.id}.${index}`) ?
+      <Tile img={element.image} key={`${element.id}.${index}`} /> : found.find(ex => ex === element.id) ?
+        <FoundTile /> : <HiddenTile key={`${element.id}.${index}`} id={`${element.id}.${index}`} />));
 
-    });
     return (
       <section id="products">
         <h2>Super gra!</h2>
@@ -31,20 +29,26 @@ class Memory extends React.Component {
           {Elements}
         </div>
       </section>
-    )
-  };
+    );
+  }
 }
+
+Memory.propTypes = {
+  exposed: PropTypes.arrayOf(PropTypes.string),
+  found: PropTypes.arrayOf(PropTypes.string),
+  elements: PropTypes.arrayOf(PropTypes.object).isRequired,
+  cats: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 Memory.defaultProps = {
   exposed: [],
-  found: []
-
+  found: [],
 };
-export default connect(state => {
-  return {
-    elements: state.game.elements,
-    exposed: state.game.exposed,
-    found: state.game.found,
-    cats: state.cat.cats
-  }
-})(Memory);
+
+export default connect(state => ({
+  elements: state.game.elements,
+  exposed: state.game.exposed,
+  found: state.game.found,
+  cats: state.cat.cats,
+}))(Memory);

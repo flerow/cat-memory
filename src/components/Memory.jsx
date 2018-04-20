@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { shuffle } from 'lodash';
 import { resetProgress, setGame } from '../actions/game';
 import HiddenTile from './HiddenTile';
-import FoundTile from './FoundTile';
 import Tile from './Tile';
 
 class Memory extends React.Component {
@@ -18,9 +17,18 @@ class Memory extends React.Component {
 
   render() {
     const { elements, exposed, found } = this.props;
-    const Elements = elements.map((element, index) => (exposed.find(ex => ex === `${element.id}.${index}`) ?
-      <Tile img={element.image} key={`${element.id}.${index}`} /> : found.find(ex => ex === element.id) ?
-        <FoundTile /> : <HiddenTile key={`${element.id}.${index}`} id={`${element.id}.${index}`} />));
+    const Elements = elements.map((element, index) => ((
+      exposed.some(ex => ex === `${element.id}.${index}`) || found.some(ex => ex === element.id)) ?
+        <Tile
+          found={found.some(ex => ex === element.id)}
+          img={element.image}
+          key={`${element.id}.${index}`}
+        /> :
+        <HiddenTile
+          key={`${element.id}.${index}`}
+          id={`${element.id}.${index}`}
+        />
+    ));
 
     return (
       <section id="products">

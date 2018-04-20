@@ -3,7 +3,7 @@ import { SET_GROUP, SET_LOGGED_IN, SET_LOGGED_OUT, SET_USERNAME } from '../actio
 
 const initialState = {
   username: null,
-  logged_in: false,
+  loggedIn: false,
   group: 'ANON',
 };
 
@@ -12,9 +12,9 @@ export default (state = initialState, action) => {
 
   switch (action.type) {
     case SET_LOGGED_IN:
-      return { ...stateClone, logged_in: true };
+      return { ...stateClone, loggedIn: true };
     case SET_LOGGED_OUT:
-      return { ...stateClone, logged_in: false };
+      return { ...stateClone, loggedIn: false };
     case SET_USERNAME:
       return { ...stateClone, username: action.payload.username };
     case SET_GROUP:

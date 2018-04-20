@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { clickTile } from '../actions/game';
 
 const HiddenTile = props => (
-  <div className="col-lg-3 col-md-4 col-sm-6 mt-3" onClick={() => props.dispatch(clickTile(props.id, props.exposed ? props.exposed : []))}>
+  <div className="col-lg-3 col-md-3 col-sm-3 mt-3 col-3" onClick={() => props.dispatch(clickTile(props.id, props.exposed ? props.exposed : []))}>
     <article className="card p-3">
       <div className="card-block">
         <div className="img-card">

@@ -3,3 +3,8 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.tile-invisible {
+  opacity: 0;
+  transition: all 250ms linear;
+}

@@ -36,9 +36,7 @@ export const clickTile = (id, exposedElements) => (dispatch) => {
   } else if (exposedElements.length === 1) {
     dispatch(exposeTile(id));
     if (exposedElements.find(el => id.split('.')[0] === el.split('.')[0])) {
-      setTimeout(() => {
-        dispatch(setFound(id.split('.')[0]));
-      }, 500);
+      dispatch(setFound(id.split('.')[0]));
     }
   } else {
     dispatch(hideTiles());

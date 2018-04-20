@@ -1,17 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addCat } from '../actions/cat';
+import { editCat } from '../actions/cat';
 
-class AddCatForm extends React.Component {
+class EditCatForm extends React.Component {
   constructor(props) {
     super(props);
-
+    const {
+      name, image, description, id,
+    } = props.cats.find(cat => cat.id === props.match.params.id);
     this.state = {
-      name: '',
-      description: '',
-      image: '',
+      name,
+      description,
+      image,
+      id,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,7 +43,7 @@ class AddCatForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.dispatch(addCat(this.state));
+    this.props.dispatch(editCat(this.state));
     this.setState({ redirect: true });
   }
 
@@ -49,10 +52,10 @@ class AddCatForm extends React.Component {
       <div>
         {this.state.redirect && <Redirect to="/koty" />}
         <div className="row">
-          <div className="col-6 offset-3">
+          <div className="col-md-6 offset-md-3 col-12">
             <form className="form-horizontal" onSubmit={this.handleSubmit}>
               <fieldset>
-                <legend className="text-center">Dodaj kota</legend>
+                <legend className="text-center">Edytuj kota</legend>
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="name">Imię</label>
                   <div className="col-md-9">
@@ -94,7 +97,7 @@ class AddCatForm extends React.Component {
                 </div>
                 <div className="form-group">
                   <div className="col-md-12 text-right">
-                    <button type="submit" className="btn btn-primary btn-lg">Dodaj</button>
+                    <button type="submit" className="btn btn-primary btn-lg">Edytuj</button>
                   </div>
                 </div>
               </fieldset>
@@ -106,8 +109,12 @@ class AddCatForm extends React.Component {
   }
 }
 
-AddCatForm.propTypes = {
+EditCatForm.propTypes = {
+  cats: PropTypes.arrayOf(PropTypes.object).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.object,
+  }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect()(AddCatForm);
+export default connect(state => state.cat)(EditCatForm);

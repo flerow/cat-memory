@@ -1,9 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function loggedIn(WrappedComponent) {
-  return (props) => {
-    const authenticated = props.logged_in;
+  const LoggedIn = (props) => {
+    const authenticated = props.loggedIn;
     return (
       <div>
         {authenticated && <WrappedComponent {...props} />}
@@ -11,4 +12,10 @@ export default function loggedIn(WrappedComponent) {
       </div>
     );
   };
+
+  LoggedIn.propTypes = {
+    loggedIn: PropTypes.bool.isRequired,
+  };
+
+  return LoggedIn;
 }

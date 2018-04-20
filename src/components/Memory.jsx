@@ -9,10 +9,24 @@ import Tile from './Tile';
 class Memory extends React.Component {
   constructor(props) {
     super(props);
+    this.restartGame = this.restartGame.bind(this);
+  }
 
-    const gameElements = shuffle(props.cats.concat(props.cats));
-    props.dispatch(resetProgress());
-    props.dispatch(setGame(gameElements));
+  componentDidMount() {
+    const { dispatch, cats } = this.props;
+    const gameElements = shuffle(cats.concat(cats));
+    dispatch(setGame(gameElements));
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(resetProgress());
+  }
+
+  restartGame() {
+    const { cats, dispatch } = this.props;
+    const gameElements = shuffle(cats.concat(cats));
+    dispatch(resetProgress());
+    dispatch(setGame(gameElements));
   }
 
   render() {
@@ -35,6 +49,9 @@ class Memory extends React.Component {
         <h2>Super gra!</h2>
         <div className="row">
           {Elements}
+        </div>
+        <div className="row">
+          <button className="btn btn-danger mt-3 btn-block" onClick={this.restartGame}>Restart</button>
         </div>
       </section>
     );

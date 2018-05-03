@@ -11,7 +11,7 @@ const Cat = props => (
       </header>
       <div className="card-block">
         <div className="img-card">
-          <img src={props.img} alt="Movie" className="w-100" />
+          <img src={props.img} alt="kot" className="w-100" />
         </div>
         <p className="tagline card-text text-xs-center">{props.description}</p>
         <Link href={`/koty/${props.id}`} className="btn btn-primary btn-block" to={`/koty/${props.id}`}>Edytuj</Link>

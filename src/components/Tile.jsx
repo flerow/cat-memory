@@ -6,7 +6,7 @@ const Tile = props => (
     <article className="card p-3">
       <div className="card-block">
         <div className="img-card">
-          <img src={props.img} alt="Movie" className="w-100" />
+          <img src={props.img} alt="obrazek" className="w-100" />
         </div>
       </div>
     </article>

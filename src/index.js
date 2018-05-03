@@ -8,6 +8,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { reducer as form } from 'redux-form';
 import registerServiceWorker from './registerServiceWorker';
 import cat from './reducers/cat';
 import game from './reducers/game';
@@ -20,7 +21,9 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = persistReducer(persistConfig, combineReducers({ auth, cat, game }));
+const rootReducer = persistReducer(persistConfig, combineReducers({
+  auth, cat, game, form,
+}));
 const store = createStore(rootReducer, {}, applyMiddleware(thunk, logger));
 const persistor = persistStore(store);
 
@@ -32,6 +35,6 @@ ReactDOM.render(
       </Router>
     </PersistGate>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 registerServiceWorker();

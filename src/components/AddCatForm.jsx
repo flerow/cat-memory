@@ -1,4 +1,5 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,39 +9,12 @@ class AddCatForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      name: '',
-      description: '',
-      image: '',
-    };
-
+    this.state = {};
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleImageChange = this.handleImageChange.bind(this);
   }
 
-  handleNameChange(e) {
-    this.setState({
-      name: e.target.value,
-    });
-  }
-
-  handleDescriptionChange(e) {
-    this.setState({
-      description: e.target.value,
-    });
-  }
-
-  handleImageChange(e) {
-    this.setState({
-      image: e.target.value,
-    });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.dispatch(addCat(this.state));
+  handleSubmit(values) {
+    this.props.dispatch(addCat(values));
     this.setState({ redirect: true });
   }
 
@@ -50,45 +24,42 @@ class AddCatForm extends React.Component {
         {this.state.redirect && <Redirect to="/koty" />}
         <div className="row">
           <div className="col-md-6 offset-md-3 col-12">
-            <form className="form-horizontal" onSubmit={this.handleSubmit}>
+            <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.handleSubmit)}>
               <fieldset>
                 <legend className="text-center">Dodaj kota</legend>
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="name">Imię</label>
                   <div className="col-md-9">
-                    <input
+                    <Field
+                      component="input"
                       id="name"
                       name="name"
                       type="text"
                       className="form-control"
-                      value={this.state.name}
-                      onChange={this.handleNameChange}
                     />
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="image">Url zdjęcia</label>
                   <div className="col-md-9">
-                    <input
+                    <Field
+                      component="input"
                       id="image"
                       name="image"
                       type="text"
                       className="form-control"
-                      value={this.state.image}
-                      onChange={this.handleImageChange}
                     />
                   </div>
                 </div>
                 <div className="form-group">
                   <label className="col-md-3 control-label" htmlFor="description">Opis</label>
                   <div className="col-md-9">
-                    <textarea
+                    <Field
+                      component="textarea"
                       className="form-control"
                       id="description"
                       name="description"
                       rows="5"
-                      value={this.state.description}
-                      onChange={this.handleDescriptionChange}
                     />
                   </div>
                 </div>
@@ -108,6 +79,9 @@ class AddCatForm extends React.Component {
 
 AddCatForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
-export default connect()(AddCatForm);
+export default reduxForm({
+  form: 'addCat',
+})(connect()(AddCatForm));
